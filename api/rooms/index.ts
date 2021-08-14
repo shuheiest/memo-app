@@ -1,10 +1,5 @@
-import { mockMethods } from "aspida-mock";
-
-export type Room = {
-    roomId: number
-    roomName: string
-    color: string
-}
+import { mockMethods } from 'aspida-mock'
+import type { Room } from '../@types'
 
 export type Methods = {
     get: {
@@ -13,9 +8,9 @@ export type Methods = {
 }
 
 const rooms: Room[] = [
-    { roomId: 0, roomName: 'room1', color: 'blue' },
-    { roomId: 1, roomName: 'room2', color: 'purple' },
-    { roomId: 2, roomName: 'room3', color: 'green' },
+    { roomId: 0, roomName: 'room1', color: 'blue', cards: [] },
+    { roomId: 1, roomName: 'room2', color: 'purple', cards: [] },
+    { roomId: 2, roomName: 'room3', color: 'green' , cards: [] },
 ]
 
 export default mockMethods<Methods>({
