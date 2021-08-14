@@ -13,9 +13,9 @@ export type Methods = {
 }
 
 const rooms: Room[] = [
-    { roomId: 0, roomName: 'room', color: 'red' },
-    { roomId: 1, roomName: 'room', color: 'blue' },
-    { roomId: 2, roomName: 'room', color: 'green' },
+    { roomId: 0, roomName: 'room1', color: 'blue' },
+    { roomId: 1, roomName: 'room2', color: 'purple' },
+    { roomId: 2, roomName: 'room3', color: 'green' },
 ]
 
 export default mockMethods<Methods>({
