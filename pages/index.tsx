@@ -44,7 +44,7 @@ export default defineComponent({
           </div>
         </div>
       ) : (
-        <div> "Loading..." </div>
+        <div> Loading... </div>
       )
     },
 })

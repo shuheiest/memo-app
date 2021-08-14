@@ -1,6 +1,6 @@
 import { defineComponent, PropType, useContext } from "@nuxtjs/composition-api";
 import type { Room } from '~/api/@types'
-import styles, { rooms } from '~/components/styles.module.css'
+import styles from '~/components/styles.module.css'
 
 export const Sideber = defineComponent({
     props: {
@@ -12,7 +12,7 @@ export const Sideber = defineComponent({
     setup(props) {
         const ctx = useContext()
         return () => (
-            <div class={styles.rooms}>
+            <div class={styles.sidebar}>
                 {props.rooms.map((room) => (
                     <nuxt-link
                         key={room.roomId}
