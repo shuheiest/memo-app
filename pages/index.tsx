@@ -7,7 +7,7 @@ import {
   useRoute,
 } from '@nuxtjs/composition-api'
 import styles from './styles.module.css'
-import type { Room } from '~/api/@types'
+import type { Room, Card } from '~/api/@types'
 import { Board } from '~/components/Board'
 import { Sideber } from '~/components/Sideber'
 
@@ -28,8 +28,27 @@ export default defineComponent({
 
     onMounted(async () => {
       rooms.value = await ctx.$api.rooms.$get()
-      console.log(rooms.value)
     })
+    const updateCardText = async (cardId: Card['cardId'], text: string) => {
+      const validateRoomId = roomId.value
+      if (validateRoomId === undefined) return
+
+      await ctx.$api.rooms
+        ._roomId(validateRoomId)
+        .cards._cardId(cardId)
+        .$patch({ body: { text } })
+
+      rooms.value = await ctx.$api.rooms.$get()
+    }
+
+    const addCard = async () => {
+      const validateRoomId = roomId.value
+      if (validateRoomId === undefined) return
+      await ctx.$api.rooms._roomId(validateRoomId).cards.$post()
+
+      rooms.value = await ctx.$api.rooms.$get()
+      console.log(rooms.value)
+    }
 
     return () => 
       rooms.value ? (
@@ -39,7 +58,11 @@ export default defineComponent({
           </div>
           <div class={styles.boardwrapper}>
             {roomId.value !== undefined && (
-              <Board cards={rooms.value[roomId.value].cards} />
+                <Board
+                  cards={rooms.value[roomId.value].cards}
+                  input={updateCardText}
+                  add={addCard}
+              />
             )}
           </div>
         </div>

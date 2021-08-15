@@ -44,3 +44,15 @@
   width: 240px;
   height: 320px;
 }
+
+.addCardButton {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  font-size: 48px;
+  color: #2f6665;
+  background-color: #eee8;
+  border: none;
+  width: 48px;
+  cursor: pointer;
+}
