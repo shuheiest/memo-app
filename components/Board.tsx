@@ -19,6 +19,10 @@ export const Board = defineComponent({
             type: Function as PropType<() => void>,
             required: true,
         },
+        delete: {
+            type: Function as PropType<(cardId: Card['cardId']) => void>,
+            required: true,
+        },
     },
     setup(props) {
         const ctx = useContext()
@@ -30,6 +34,7 @@ export const Board = defineComponent({
                 key={card.cardId}
                 card={card}
                 input={(text) => props.input(card.cardId, text)}
+                delete={() => props.delete(card.cardId) }
             />
             ))}
             <button class={styles.addCardButton} onClick={onClick}>

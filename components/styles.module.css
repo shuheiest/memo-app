@@ -56,3 +56,15 @@
   width: 48px;
   cursor: pointer;
 }
+
+.deleteButtom {
+  position: absolute;
+  right: 1%;
+  top: 1%;
+  border-radius: 50%;
+  height: 22px;
+  font-size: 8px;
+  border: solid 1px #eee8;
+  background-color: transparent;
+  cursor: pointer;
+}
