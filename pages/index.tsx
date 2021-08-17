@@ -14,7 +14,6 @@ import { Sideber } from '~/components/Sideber'
 
 export type OptionalQuery = {
   roomId: number
-  potision: number
 }
 
 export default defineComponent({
