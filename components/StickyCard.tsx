@@ -1,6 +1,7 @@
 import { defineComponent, PropType, computed, ref } from "@nuxtjs/composition-api"
 import type { Card } from '~/api/@types'
 import styles from '~/components/styles.module.css'
+import {DragHandler} from './DragHandler'
 
 export const StickyCard = defineComponent({
     props: {
@@ -9,7 +10,11 @@ export const StickyCard = defineComponent({
             required: true,
         },
         input: {
-            type: Object as PropType<(text: string) => void>,
+            type: Function as PropType<(text: string) => void>,
+            required: true,
+        },
+        movedate: {
+            type: Function as PropType<(position: Card['position']) => void>,
             required: true,
         },
         delete: { type: Function as PropType<() => void>, required: true },
@@ -22,13 +27,11 @@ export const StickyCard = defineComponent({
         )
         const onInput = ({ target }: Event) => {
         if (!(target instanceof HTMLTextAreaElement)) return
-
         localtext.value = target.value
         props.input(target.value)
         }
         const onFocus = () => (isForcusing.value = true)
         const onBlur = () => (isForcusing.value = false)
-        const onClick = () => props.delete()
 
         return () => (
             <div
@@ -38,11 +41,13 @@ export const StickyCard = defineComponent({
                     left: `${props.card.position.x}px`,
                     backgroundColor: props.card.color,
                 }}
-                >       
-                <div class={styles.stickyArea} />
-                <button class={styles.deleteButtom} type="submit" onClick={onClick}>
-                    ×
-                </button>
+                >
+                <DragHandler
+                    card={props.card}
+                    delete={() => props.delete() }
+                    input={props.input}
+                    movedata={(position) => props.movedate(position)}
+                />
                     <textarea
                 style="border:none;"
                 class={styles.textArea}

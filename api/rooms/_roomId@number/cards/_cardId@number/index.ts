@@ -24,7 +24,6 @@ export default mockMethods<Methods>({
         ?.cards.find((card) => card.cardId === cardId),
       params.reqBody
     )
-
     return { status: 200, resBody }
   },
   delete: (params) => {

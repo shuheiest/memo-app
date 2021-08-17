@@ -23,6 +23,10 @@ export const Board = defineComponent({
             type: Function as PropType<(cardId: Card['cardId']) => void>,
             required: true,
         },
+        movedate: {
+            type: Function as PropType<(cardId: Card['cardId'], position: Card['position']) => void>,
+            required: true,
+        },
     },
     setup(props) {
         const ctx = useContext()
@@ -35,6 +39,7 @@ export const Board = defineComponent({
                 card={card}
                 input={(text) => props.input(card.cardId, text)}
                 delete={() => props.delete(card.cardId) }
+                movedate={(position) => props.movedate(card.cardId, position)}
             />
             ))}
             <button class={styles.addCardButton} onClick={onClick}>
