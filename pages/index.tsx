@@ -17,22 +17,14 @@ export type OptionalQuery = {
 }
 
 export default defineComponent({
-  props: {
-    movedata: {
-      type: Function as PropType<(position: number) => void>,
-      required: true,
-    }
-  },
   setup(props) {
     const ctx = useContext()
     const rooms = ref<Room[]>()
     const route = useRoute()
-    console.log(props.movedata)
     const roomId = computed(() => {
       const { roomId } = route.value.query
       return isNaN(+roomId) ? undefined : +roomId
     })
-    console.log('roomID =', roomId.value)
 
     onMounted(async () => {
       rooms.value = await ctx.$api.rooms.$get()
@@ -40,14 +32,12 @@ export default defineComponent({
     const updateCardText = async (cardId: Card['cardId'], text: string) => {
       const validateRoomId = roomId.value
       if (validateRoomId === undefined) return
-      console.log(text)
       await ctx.$api.rooms
         ._roomId(validateRoomId)
         .cards._cardId(cardId)
         .$patch({ body: { text } })
 
       rooms.value = await ctx.$api.rooms.$get()
-      console.log(rooms.value)
     }
 
     const addCard = async () => {
@@ -56,7 +46,6 @@ export default defineComponent({
       await ctx.$api.rooms._roomId(validateRoomId).cards.$post()
 
       rooms.value = await ctx.$api.rooms.$get()
-      // console.log(rooms.value)
     }
     const deleteCard = async (cardId: Card['cardId']) => {
       const validateRoomId = roomId.value
@@ -70,7 +59,6 @@ export default defineComponent({
     }
     const chanege = async (cardId: Card['cardId'], position: Card['position']) => {
       const validateRoomId = roomId.value
-      console.log(position)
       if (validateRoomId === undefined) return
       await ctx.$api.rooms
         ._roomId(validateRoomId)
@@ -78,7 +66,6 @@ export default defineComponent({
         .$patch({ body: { position }})
 
         rooms.value = await ctx.$api.rooms.$get()
-        console.log(rooms.value)
     }
 
     return () => 
@@ -94,7 +81,7 @@ export default defineComponent({
                   input={updateCardText}
                   add={addCard}
                   delete={deleteCard}
-                  movedate={chanege}
+                  movedata={chanege}
               />
             )}
           </div>

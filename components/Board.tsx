@@ -23,7 +23,7 @@ export const Board = defineComponent({
             type: Function as PropType<(cardId: Card['cardId']) => void>,
             required: true,
         },
-        movedate: {
+        movedata: {
             type: Function as PropType<(cardId: Card['cardId'], position: Card['position']) => void>,
             required: true,
         },
@@ -39,7 +39,7 @@ export const Board = defineComponent({
                 card={card}
                 input={(text) => props.input(card.cardId, text)}
                 delete={() => props.delete(card.cardId) }
-                movedate={(position) => props.movedate(card.cardId, position)}
+                movedata={(position) => props.movedata(card.cardId, position)}
             />
             ))}
             <button class={styles.addCardButton} onClick={onClick}>

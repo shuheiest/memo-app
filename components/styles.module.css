@@ -26,6 +26,7 @@
 }
 
 .stickyArea {
+  position: relative;
   height: 32px;
   background-color: #eee8;
 }

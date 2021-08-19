@@ -13,7 +13,7 @@ export const StickyCard = defineComponent({
             type: Function as PropType<(text: string) => void>,
             required: true,
         },
-        movedate: {
+        movedata: {
             type: Function as PropType<(position: Card['position']) => void>,
             required: true,
         },
@@ -22,6 +22,8 @@ export const StickyCard = defineComponent({
     setup(props) {
         const isForcusing = ref(false)
         const localtext = ref(props.card.text)
+        const x = ref(props.card.position.x)
+        const y = ref(props.card.position.y)
         const text = computed(() =>
         isForcusing.value ? localtext.value : props.card.text
         )
@@ -30,6 +32,10 @@ export const StickyCard = defineComponent({
         localtext.value = target.value
         props.input(target.value)
         }
+        const getPosition  = (position: {x:number,y:number}) => {
+           x.value = position.x
+           y.value = position.y
+        }
         const onFocus = () => (isForcusing.value = true)
         const onBlur = () => (isForcusing.value = false)
 
@@ -37,8 +43,8 @@ export const StickyCard = defineComponent({
             <div
                 class={styles.cardContainer}
                 style= {{
-                    top: `${props.card.position.y}px`,
-                    left: `${props.card.position.x}px`,
+                    top: `${y.value}px`,
+                    left: `${x.value}px`,
                     backgroundColor: props.card.color,
                 }}
                 >
@@ -46,7 +52,8 @@ export const StickyCard = defineComponent({
                     card={props.card}
                     delete={() => props.delete() }
                     input={props.input}
-                    movedata={(position) => props.movedate(position)}
+                    movedata={(position) => props.movedata(position)}
+                    getPosition={getPosition}
                 />
                     <textarea
                 style="border:none;"

@@ -19,33 +19,47 @@ export const DragHandler = defineComponent({
     movedata: {
       type: Function as PropType<(position: Card['position']) => void>,
       required: true
-    }
+    },
+    getPosition: {
+      type: Function as PropType<(position: {x:number,y:number}) => void>,
+      required: true,
+    },
   },
   setup(props) {
     const isMove = ref(false)
-    const postion = ref(props.card.position)
-    const mousedown = () => {
-      isMove.value = true
-      console.log(isMove.value)
-    }
-    const mouseup = () => {
-      isMove.value = false
-      console.log(isMove.value)
+    const x = ref(0)
+    const y = ref(0)
+    const mousedown = (e: MouseEvent) => {
+      if (!isMove.value) {
+        isMove.value = true
+        x.value = props.card.position.x
+        y.value = props.card.position.y
+      }
     }
     const mousemove = (e: MouseEvent) => {
       if (isMove.value) {
-        // x,yのデータを親に渡す。
-        console.log(e.offsetX)
-        console.log(e.offsetY)
-        props.movedata({x:e.offsetX ,y:e.offsetY})
+        x.value = x.value + e.movementX
+        y.value = y.value + e.movementY
+        props.getPosition({x:x.value,y:y.value})
+        props.movedata({x:x.value,y:y.value})
+        isMove.value = true
+      }
+    }
+    const mouseup = (e: MouseEvent) => {
+      if (!isMove.value) {
+        x.value = props.card.position.x
+        y.value = props.card.position.y
+        props.getPosition({x:x.value,y:y.value})
+        props.movedata({x:x.value,y:y.value})
       }
       isMove.value = false
     }
+
     const onClick = () => props.delete()
     return () => (
       <div>
-        <div 
-          class={styles.stickyArea}  
+        <div
+        class={styles.stickyArea} 
           onMousedown={mousedown}
           onMouseup={mouseup}
           onMousemove={mousemove}
