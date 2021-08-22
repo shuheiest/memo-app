@@ -51,12 +51,8 @@ export const StickyCard = defineComponent({
       y.value = position.y
     }
     const getZindex = () => {
-      console.log('getZindex')
       stickycardzindex.value = props.getZindex
-      console.log(stickycardzindex.value)
       props.updateZindex(stickycardzindex.value)
-
-      // props.stickZ(StickyCardZindex.value)
     }
     const onFocus = () => (isForcusing.value = true)
     const onBlur = () => (isForcusing.value = false)

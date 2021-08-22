@@ -54,22 +54,24 @@ export const Board = defineComponent({
     const onMousedown = (CardId: number) => {
       clickedCardId.value = CardId
     }
-    const getZindex = (CardId: number) => {
-      // props.cards.map((card) => {
-      console.log('check')
-      if (props.cards[CardId].cardId === clickedCardId.value) {
-        maxZindex.value = maxZindex.value + 1
-      }
-      // })
+    const addZindex = () => {
+      maxZindex.value = maxZindex.value + 1
+    }
+    const getZindex = () => {
       return maxZindex.value
     }
     return () => (
       <div class={styles.boardContainer}>
         {props.cards.map((card) => (
-          <div onMousedown={() => onMousedown(card.cardId)}>
+          <div
+            onMousedown={() => {
+              onMousedown(card.cardId)
+              addZindex()
+            }}
+          >
             <StickyCard
               key={card.cardId}
-              getZindex={getZindex(card.cardId)}
+              getZindex={getZindex()}
               card={card}
               input={(text) => props.input(card.cardId, text)}
               delete={() => props.delete(card.cardId)}
