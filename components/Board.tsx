@@ -45,15 +45,11 @@ export const Board = defineComponent({
     const ctx = useContext()
     const onClick = () => props.add()
     const maxZindex = ref(0)
-    const clickedCardId = ref()
     props.cards.map((card) => {
       if (card.zIndex > maxZindex.value) {
         maxZindex.value = card.zIndex
       }
     })
-    const onMousedown = (CardId: number) => {
-      clickedCardId.value = CardId
-    }
     const addZindex = () => {
       maxZindex.value = maxZindex.value + 1
     }
@@ -65,7 +61,6 @@ export const Board = defineComponent({
         {props.cards.map((card) => (
           <div
             onMousedown={() => {
-              onMousedown(card.cardId)
               addZindex()
             }}
           >
