@@ -5,12 +5,11 @@ import {
   ref,
   useContext,
   useRoute,
-  PropType,
 } from '@nuxtjs/composition-api'
-import styles from './styles.module.css'
-import type { Room, Card } from '~/api/@types'
+import type { Card, Room } from '~/api/@types'
 import { Board } from '~/components/Board'
 import { Sideber } from '~/components/Sideber'
+import styles from './styles.module.css'
 
 export type OptionalQuery = {
   roomId: number
@@ -57,18 +56,34 @@ export default defineComponent({
 
       rooms.value = await ctx.$api.rooms.$get()
     }
-    const chanege = async (cardId: Card['cardId'], position: Card['position']) => {
+    const updateCardPosition = async (
+      cardId: Card['cardId'],
+      position: Card['position']
+    ) => {
       const validateRoomId = roomId.value
       if (validateRoomId === undefined) return
       await ctx.$api.rooms
         ._roomId(validateRoomId)
         .cards._cardId(cardId)
-        .$patch({ body: { position }})
+        .$patch({ body: { position } })
 
-        rooms.value = await ctx.$api.rooms.$get()
+      rooms.value = await ctx.$api.rooms.$get()
+    }
+    const updateZindex = async (
+      cardId: Card['cardId'],
+      zIndex: Card['zIndex']
+    ) => {
+      const validateRoomId = roomId.value
+      if (validateRoomId === undefined) return
+      await ctx.$api.rooms
+        ._roomId(validateRoomId)
+        .cards._cardId(cardId)
+        .$patch({ body: { zIndex } })
+
+      rooms.value = await ctx.$api.rooms.$get()
     }
 
-    return () => 
+    return () =>
       rooms.value ? (
         <div class={styles.container}>
           <div class={styles.sideberwrapper}>
@@ -76,12 +91,13 @@ export default defineComponent({
           </div>
           <div class={styles.boardwrapper}>
             {roomId.value !== undefined && (
-                <Board
-                  cards={rooms.value[roomId.value].cards}
-                  input={updateCardText}
-                  add={addCard}
-                  delete={deleteCard}
-                  movedata={chanege}
+              <Board
+                cards={rooms.value[roomId.value].cards}
+                input={updateCardText}
+                add={addCard}
+                delete={deleteCard}
+                updatePosition={updateCardPosition}
+                updateZindex={updateZindex}
               />
             )}
           </div>
@@ -89,5 +105,5 @@ export default defineComponent({
       ) : (
         <div> Loading... </div>
       )
-    },
+  },
 })

@@ -7,7 +7,7 @@ export type Methods = {
     reqBody: Partial<Omit<Card, 'cardId'>>
     resBody: Card
   }
-  delete: { 
+  delete: {
     resBody: Card
   }
 }
@@ -29,15 +29,15 @@ export default mockMethods<Methods>({
   delete: (params) => {
     const { roomId, cardId } = params.values
     if (typeof roomId === 'string' || typeof cardId === 'string')
-    return { status: 400 }
+      return { status: 400 }
 
     const room = rooms.find((room) => room.roomId === roomId)
     const card = room?.cards.find((card) => card.cardId === cardId)
 
     if (!room || !card)
-    return {
-      status: 400,
-    }
+      return {
+        status: 400,
+      }
     room.cards = room.cards.filter((card) => card.cardId !== cardId)
     return { status: 200, resBody: card }
   },

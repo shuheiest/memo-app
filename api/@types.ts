@@ -5,7 +5,8 @@ export type Card = {
     position: {
         x: number
         y: number
-    }
+    },
+    zIndex: number
 }
 
 export type Room = {
@@ -14,5 +15,4 @@ export type Room = {
     color: string
     cards: Card[]
 }
-
 export type Color = { color: string }
