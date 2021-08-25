@@ -64,6 +64,13 @@ export const DragHandler = defineComponent({
           onMouseup={onMouseup}
           onMousemove={onMousemove}
         />
+        {isMove.value && (
+          <div
+            class={styles.expandstickyArea}
+            onMouseup={onMouseup}
+            onMousemove={onMousemove}
+          />
+        )}
         <button class={styles.deleteButtom} type="submit" onClick={onClick}>
           ×
         </button>

@@ -56,7 +56,6 @@ export const StickyCard = defineComponent({
     }
     const onFocus = () => (isForcusing.value = true)
     const onBlur = () => (isForcusing.value = false)
-
     return () => (
       <div onMousedown={() => getZindex()}>
         <div
