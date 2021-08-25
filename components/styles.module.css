@@ -46,6 +46,10 @@
   background-color: transparent;
 }
 
+.textArea:hover {
+  pointer-events: none;
+}
+
 .cardContainer {
   position: absolute;
   width: 240px;
