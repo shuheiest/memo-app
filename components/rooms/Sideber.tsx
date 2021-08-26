@@ -16,7 +16,7 @@ export const Sideber = defineComponent({
         {props.rooms.map((room) => (
           <nuxt-link
             key={room.roomId}
-            to={ctx.$pagesPath.$url({ query: { roomId: room.roomId } })}
+            to={ctx.$pagesPath.rooms.$url({ query: { roomId: room.roomId } })}
           >
             <div
               class={styles.room}
