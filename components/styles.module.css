@@ -42,12 +42,7 @@
   max-height: 288px;
   width: 240px;
   height: 288px;
-  filter: invert(100%) grayscale(100%);
   background-color: transparent;
-}
-
-.textArea:hover {
-  pointer-events: none;
 }
 
 .cardContainer {
