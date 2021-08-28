@@ -27,13 +27,13 @@ export const DragHandler = defineComponent({
   },
   setup(props) {
     const isMove = ref(false)
-    const x = ref(0)
-    const y = ref(0)
+    const x = ref(props.card.position.x)
+    const y = ref(props.card.position.y)
     const onMousedown = (e: MouseEvent) => {
       if (!isMove.value) {
         isMove.value = true
-        x.value = props.card.position.x
-        y.value = props.card.position.y
+        // x.value = props.card.position.x
+        // y.value = props.card.position.y
       }
     }
     const onMousemove = (e: MouseEvent) => {
