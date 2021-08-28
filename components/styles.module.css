@@ -3,7 +3,6 @@
 }
 
 .sidebar {
-  width: 160px;
   height: 100vh;
   border-color: rgb(150, 180, 190);
   border-width: 1px;
@@ -47,8 +46,6 @@
 
 .cardContainer {
   position: absolute;
-  width: 240px;
-  height: 320px;
 }
 
 .addCardButton {

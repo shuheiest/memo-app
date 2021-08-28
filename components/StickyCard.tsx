@@ -1,6 +1,8 @@
 import {
   computed,
   defineComponent,
+  onMounted,
+  onUnmounted,
   PropType,
   ref,
 } from '@nuxtjs/composition-api'
@@ -31,6 +33,10 @@ export const StickyCard = defineComponent({
       type: Number as PropType<Card['zIndex']>,
       required: false,
     },
+    sidebarWidth: {
+      type: Number as PropType<Number>,
+      required: true,
+    },
   },
   setup(props) {
     const stickycardzindex = ref()
@@ -38,6 +44,23 @@ export const StickyCard = defineComponent({
     const localtext = ref(props.card.text)
     const x = ref(props.card.position.x)
     const y = ref(props.card.position.y)
+    const cardHeight = ref(320)
+    const cardWidth = ref(240)
+    const windowWidth = ref(window.innerWidth)
+    const windosHeight = ref(window.innerHeight)
+    const sidebarWidth = ref()
+    sidebarWidth.value = props.sidebarWidth
+    const reSize = () => {
+      windowWidth.value = window.innerWidth
+      windosHeight.value = window.innerHeight
+    }
+    onMounted(() => {
+      window.addEventListener('resize', reSize, false)
+      reSize()
+    })
+    onUnmounted(() => {
+      window.removeEventListener('resize', reSize, false)
+    })
     const text = computed(() =>
       isForcusing.value ? localtext.value : props.card.text
     )
@@ -48,7 +71,22 @@ export const StickyCard = defineComponent({
     }
     const getPosition = (position: { x: number; y: number }) => {
       x.value = position.x
+      if (x.value < 0) {
+        x.value = 0
+      }
+      if (
+        windowWidth.value - cardWidth.value <
+        position.x + sidebarWidth.value
+      ) {
+        x.value = windowWidth.value - cardWidth.value - sidebarWidth.value
+      }
       y.value = position.y
+      if (y.value < 0) {
+        y.value = 0
+      }
+      if (windosHeight.value - cardHeight.value < position.y) {
+        y.value = windosHeight.value - cardHeight.value
+      }
     }
     const getZindex = () => {
       stickycardzindex.value = props.getZindex
@@ -64,6 +102,8 @@ export const StickyCard = defineComponent({
             top: `${y.value}px`,
             left: `${x.value}px`,
             zIndex: stickycardzindex.value,
+            height: `${cardHeight.value}px`,
+            width: `${cardWidth.value}px`,
             backgroundColor: props.card.color,
           }}
         >

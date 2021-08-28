@@ -8,11 +8,15 @@ export const Sideber = defineComponent({
       type: Array as PropType<Room[]>,
       required: true,
     },
+    sidebarWidth: {
+      type: Number as PropType<Number>,
+      required: true,
+    },
   },
   setup(props) {
     const ctx = useContext()
     return () => (
-      <div class={styles.sidebar}>
+      <div class={styles.sidebar} style={{ width: `${props.sidebarWidth}px` }}>
         {props.rooms.map((room) => (
           <nuxt-link
             key={room.roomId}

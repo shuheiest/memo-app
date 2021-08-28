@@ -14,17 +14,16 @@ import styles from './styles.module.css'
 export type OptionalQuery = {
   roomId: number
 }
-
 export default defineComponent({
-  setup(props) {
+  setup() {
     const ctx = useContext()
     const rooms = ref<Room[]>()
     const route = useRoute()
+    const sidebarWidth = ref(160)
     const roomId = computed(() => {
       const { roomId } = route.value.query
       return isNaN(+roomId) ? undefined : +roomId
     })
-
     onMounted(async () => {
       rooms.value = await ctx.$api.rooms.$get()
     })
@@ -87,7 +86,9 @@ export default defineComponent({
       rooms.value ? (
         <div class={styles.container}>
           <div class={styles.sideberwrapper}>
-            {rooms.value && <Sideber rooms={rooms.value} />}
+            {rooms.value && (
+              <Sideber rooms={rooms.value} sidebarWidth={sidebarWidth.value} />
+            )}
           </div>
           <div class={styles.boardwrapper}>
             {roomId.value !== undefined && (
@@ -98,6 +99,7 @@ export default defineComponent({
                 delete={deleteCard}
                 updatePosition={updateCardPosition}
                 updateZindex={updateZindex}
+                sidebarWidth={sidebarWidth.value}
               />
             )}
           </div>

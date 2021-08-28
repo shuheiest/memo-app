@@ -40,6 +40,10 @@ export const Board = defineComponent({
       >,
       required: true,
     },
+    sidebarWidth: {
+      type: Number as PropType<Number>,
+      required: true,
+    },
   },
   setup(props) {
     const ctx = useContext()
@@ -74,6 +78,7 @@ export const Board = defineComponent({
                 props.updatePosition(card.cardId, position)
               }
               updateZindex={(zIndex) => props.updateZindex(card.cardId, zIndex)}
+              sidebarWidth={props.sidebarWidth}
             />
           </div>
         ))}
