@@ -20,6 +20,7 @@ export default defineComponent({
     const ctx = useContext()
     const rooms = ref<Room[]>()
     const route = useRoute()
+    const sidebarWidth = ref(160)
     const roomId = computed(() => {
       const { roomId } = route.value.query
       return isNaN(+roomId) ? undefined : +roomId
@@ -98,12 +99,13 @@ export default defineComponent({
                 delete={deleteCard}
                 updatePosition={updateCardPosition}
                 updateZindex={updateZindex}
+                sidebarWidth={sidebarWidth.value}
               />
             )}
           </div>
         </div>
       ) : (
-        <div> Loading2... </div>
+        <div> Loading:rooms... </div>
       )
   },
 })
