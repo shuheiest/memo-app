@@ -69,24 +69,26 @@ export const StickyCard = defineComponent({
       localtext.value = target.value
       props.input(target.value)
     }
-    const getPosition = (position: { x: number; y: number }) => {
-      x.value = position.x
-      if (x.value < 0) {
-        x.value = 0
-      }
+    const clampX = (positionX: number) => {
+      if (positionX < 0) return 0
       if (
         windowWidth.value - cardWidth.value <
-        position.x + sidebarWidth.value
+        positionX + sidebarWidth.value
       ) {
-        x.value = windowWidth.value - cardWidth.value - sidebarWidth.value
+        return windowWidth.value - cardWidth.value - sidebarWidth.value
       }
-      y.value = position.y
-      if (y.value < 0) {
-        y.value = 0
+      return positionX
+    }
+    const clampY = (positionY: number) => {
+      if (positionY < 0) return 0
+      if (windosHeight.value - cardHeight.value < positionY) {
+        return windosHeight.value - cardHeight.value
       }
-      if (windosHeight.value - cardHeight.value < position.y) {
-        y.value = windosHeight.value - cardHeight.value
-      }
+      return positionY
+    }
+    const getPosition = (position: { x: number; y: number }) => {
+      x.value = clampX(position.x)
+      y.value = clampY(position.y)
     }
     const getZindex = () => {
       stickycardzindex.value = props.getZindex
