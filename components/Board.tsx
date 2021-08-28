@@ -7,7 +7,11 @@ import {
 import type { Card } from '~/api/@types'
 import styles from '~/components/styles.module.css'
 import { StickyCard } from './StickyCard'
-
+const imageStyles = [
+  styles.boardBackgroundRoom1,
+  styles.boardBackgroundRoom2,
+  styles.boardBackgroundRoom3,
+]
 export const Board = defineComponent({
   props: {
     cards: {
@@ -41,7 +45,11 @@ export const Board = defineComponent({
       required: true,
     },
     sidebarWidth: {
-      type: Number as PropType<Number>,
+      type: Number as PropType<number>,
+      required: true,
+    },
+    roomId: {
+      type: Number as PropType<number>,
       required: true,
     },
   },
@@ -61,7 +69,7 @@ export const Board = defineComponent({
       return maxZindex.value
     }
     return () => (
-      <div class={styles.boardContainer}>
+      <div class={[styles.boardContainer, imageStyles[props.roomId]]}>
         {props.cards.map((card) => (
           <div
             onMousedown={() => {

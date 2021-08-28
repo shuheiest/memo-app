@@ -100,6 +100,7 @@ export default defineComponent({
                 updatePosition={updateCardPosition}
                 updateZindex={updateZindex}
                 sidebarWidth={sidebarWidth.value}
+                roomId={rooms.value[roomId.value].roomId}
               />
             )}
           </div>

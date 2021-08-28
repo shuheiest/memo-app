@@ -21,7 +21,17 @@
 .boardContainer {
   position: relative;
   height: 100%;
-  background-color: #2f6665;
+  background-size: cover;
+}
+
+.boardBackgroundRoom1 {
+  background-image: url('~/assets/room1.jpeg');
+}
+.boardBackgroundRoom2 {
+  background-image: url('~/assets/room2.jpeg');
+}
+.boardBackgroundRoom3 {
+  background-image: url('~/assets/room3.jpeg');
 }
 
 .stickyArea {

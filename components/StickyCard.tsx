@@ -34,7 +34,7 @@ export const StickyCard = defineComponent({
       required: false,
     },
     sidebarWidth: {
-      type: Number as PropType<Number>,
+      type: Number as PropType<number>,
       required: true,
     },
   },
@@ -72,8 +72,8 @@ export const StickyCard = defineComponent({
     const clampX = (positionX: number) => {
       if (positionX < 0) return 0
       if (
-        windowWidth.value - cardWidth.value <
-        positionX + sidebarWidth.value
+        windowWidth.value - sidebarWidth.value - cardWidth.value <
+        positionX
       ) {
         return windowWidth.value - cardWidth.value - sidebarWidth.value
       }
